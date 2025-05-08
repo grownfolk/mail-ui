@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GrownFolk Mail</title>
+  <title>GrownFolk Mail - The United States Social Network</title>
   <style>
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #1d1d1d, #0a2a53);
+      background: linear-gradient(135deg, #2a2a2a, #4a90e2);
       color: #fff;
       height: 100vh;
       overflow: hidden;
@@ -22,37 +22,36 @@
       text-align: center;
       padding: 20px;
     }
-    .logo {
-      max-width: 300px;
-      margin-bottom: 10px;
+    .branding {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
     }
-    .tagline {
-      font-size: 1.2em;
-      color: #ccc;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
+    .branding img {
+      height: 64px;
     }
     .identity {
-      font-size: 4em;
+      font-size: 3.2em;
       font-weight: bold;
       color: #ffd700;
       text-shadow: 0 0 10px #ffd700, 0 0 20px #4a90e2;
       animation: glow 2s ease-in-out infinite alternate;
-      margin-bottom: 10px;
     }
-    .group {
-      font-size: 1.4em;
+    .subidentity {
+      font-size: 1.2em;
       color: #b3e5fc;
+      margin-top: 8px;
+    }
+    .tagline {
+      font-size: 1em;
+      color: #ffffffcc;
       margin-bottom: 20px;
-      opacity: 0;
-      animation: fadeIn 1s ease-in forwards;
     }
     @keyframes glow {
       from { text-shadow: 0 0 5px #ffd700, 0 0 10px #4a90e2; }
       to { text-shadow: 0 0 15px #ffd700, 0 0 30px #4a90e2; }
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
     }
     .login-form {
       background: rgba(255, 255, 255, 0.1);
@@ -60,23 +59,22 @@
       border-radius: 15px;
       backdrop-filter: blur(10px);
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      margin-top: 20px;
     }
     .login-form input {
       padding: 10px;
-      margin: 10px 0;
+      margin: 10px;
       border: none;
       border-radius: 5px;
       font-size: 1em;
-      width: 250px;
     }
     .login-form button {
       padding: 10px 20px;
-      background: #e63946;
+      background: #4a90e2;
       color: #fff;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      font-weight: bold;
       transition: transform 0.3s;
     }
     .login-form button:hover {
@@ -84,17 +82,15 @@
     }
     .features {
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      justify-content: space-around;
+      width: 80%;
       margin-top: 30px;
-      gap: 20px;
     }
     .feature {
       background: rgba(255, 255, 255, 0.05);
-      padding: 15px 30px;
+      padding: 15px;
       border-radius: 10px;
       cursor: pointer;
-      font-size: 1.1em;
       transition: all 0.3s;
     }
     .feature:hover {
@@ -107,8 +103,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      opacity: 0.1;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 86.6"><polygon fill="%231d1d1d" points="50,0 100,25 100,62.5 50,86.6 0,62.5 0,25"/></svg>');
+      opacity: 0.05;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 86.6"><polygon fill="%232a2a2a" points="50,0 100,25 100,62.5 50,86.6 0,62.5 0,25"/></svg>');
       background-size: 20px 17.32px;
       pointer-events: none;
     }
@@ -117,14 +113,19 @@
 <body>
   <div class="hex-pattern"></div>
   <div class="container">
-    <img src="https://storage.ning.com/topology/rest/1.0/file/get/13541449664?profile=original" class="logo" alt="GrownFolk USA Logo"/>
-    <div class="tagline">The United States Social Network</div>
-    <div class="identity" id="userIdentity">@markus</div>
-    <div class="group" id="userGroup">/michigan</div>
-    <div class="login-form" id="loginSection" style="display: none;">
-      <input type="email" id="emailInput" placeholder="you@grownfolk.org" required />
-      <button onclick="handleLogin()">Log In</button>
+    <div class="branding">
+      <img src="https://storage.ning.com/topology/rest/1.0/file/get/13541449664?profile=original" alt="GrownFolk USA Flag Logo">
+      <img src="https://storage.ning.com/topology/rest/1.0/file/get/13541817685?profile=original" alt="GrownFolk Gold Seal">
     </div>
+    <div class="identity">.uclickweship</div>
+    <div class="subidentity">@grownfolk</div>
+    <div class="tagline">The United States Social Network</div>
+
+    <div class="login-form" id="loginSection">
+      <input type="email" id="emailInput" placeholder="Enter your email" required>
+      <button onclick="handleLogin()">Login</button>
+    </div>
+
     <div class="features" id="featureSection" style="display: none;">
       <div class="feature" onclick="showMail()">Mail</div>
       <div class="feature" onclick="showCall()">Call</div>
@@ -147,19 +148,17 @@
         .then(data => {
           if (data.wallet) {
             isLoggedIn = true;
-            currentUser = '@' + email.split('@')[0];
+            currentUser = email.split('@')[0];
             updateUI();
           }
         })
-        .catch(err => console.error('Login failed:', err));
+        .catch(error => console.error('Login failed:', error));
       }
     }
 
     function updateUI() {
-      document.getElementById('userIdentity').textContent = currentUser || '@markus';
-      document.getElementById('userGroup').textContent = '/michigan';
-      document.getElementById('loginSection').style.display = isLoggedIn ? 'none' : 'block';
-      document.getElementById('featureSection').style.display = isLoggedIn ? 'flex' : 'none';
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('featureSection').style.display = 'flex';
     }
 
     function showMail() {
@@ -169,8 +168,6 @@
     function showCall() {
       alert(`Initiating call for ${currentUser}. Redirecting to call system...`);
     }
-
-    updateUI();
   </script>
 </body>
 </html>
