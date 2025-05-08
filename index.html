@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>.grownfolk Login</title>
+  <style>
+    body {
+      margin: 0;
+      background: #001F33;
+      font-family: 'Helvetica Neue', sans-serif;
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .logo {
+      width: 130px;
+      margin-bottom: 25px;
+    }
+
+    .tagline {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .emoji {
+      font-size: 24px;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
+
+    .input, .select {
+      width: 90%;
+      max-width: 400px;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      box-sizing: border-box;
+    }
+
+    .button {
+      width: 90%;
+      max-width: 400px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #CC0000;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #ccc;
+      margin-top: 16px;
+    }
+
+    #step2, #step3 {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <img src="https://storage.ning.com/topology/rest/1.0/file/get/13534900254?profile=original" alt="GrownFolk Logo" class="logo">
+    <h2 class="tagline">The United States Social Network<span class="emoji">🇺🇸</span></h2>
+
+    <!-- Step 1: Enter Name -->
+    <div id="step1">
+      <input type="text" id="nameInput" placeholder="@you.grownfolk" class="input" required>
+      <button class="button" onclick="goToStep2()">Next</button>
+      <p class="note">Official .grownfolk login — enter your identity or wallet name.</p>
+    </div>
+
+    <!-- Step 2: Choose State -->
+    <div id="step2">
+      <select id="stateSelect" class="select" required>
+        <option value="">Select a state</option>
+        <option value="alabama">Alabama</option>
+        <option value="alaska">Alaska</option>
+        <option value="arizona">Arizona</option>
+        <option value="arkansas">Arkansas</option>
+        <option value="california">California</option>
+        <option value="colorado">Colorado</option>
+        <option value="connecticut">Connecticut</option>
+        <option value="delaware">Delaware</option>
+        <option value="florida">Florida</option>
+        <option value="georgia">Georgia</option>
+        <option value="hawaii">Hawaii</option>
+        <option value="idaho">Idaho</option>
+        <option value="illinois">Illinois</option>
+        <option value="indiana">Indiana</option>
+        <option value="iowa">Iowa</option>
+        <option value="kansas">Kansas</option>
+        <option value="kentucky">Kentucky</option>
+        <option value="louisiana">Louisiana</option>
+        <option value="maine">Maine</option>
+        <option value="maryland">Maryland</option>
+        <option value="massachusetts">Massachusetts</option>
+        <option value="michigan">Michigan</option>
+        <option value="minnesota">Minnesota</option>
+        <option value="mississippi">Mississippi</option>
+        <option value="missouri">Missouri</option>
+        <option value="montana">Montana</option>
+        <option value="nebraska">Nebraska</option>
+        <option value="nevada">Nevada</option>
+        <option value="new-hampshire">New Hampshire</option>
+        <option value="new-jersey">New Jersey</option>
+        <option value="new-mexico">New Mexico</option>
+        <option value="new-york">New York</option>
+        <option value="north-carolina">North Carolina</option>
+        <option value="north-dakota">North Dakota</option>
+        <option value="ohio">Ohio</option>
+        <option value="oklahoma">Oklahoma</option>
+        <option value="oregon">Oregon</option>
+        <option value="pennsylvania">Pennsylvania</option>
+        <option value="rhode-island">Rhode Island</option>
+        <option value="south-carolina">South Carolina</option>
+        <option value="south-dakota">South Dakota</option>
+        <option value="tennessee">Tennessee</option>
+        <option value="texas">Texas</option>
+        <option value="utah">Utah</option>
+        <option value="vermont">Vermont</option>
+        <option value="virginia">Virginia</option>
+        <option value="washington">Washington</option>
+        <option value="west-virginia">West Virginia</option>
+        <option value="wisconsin">Wisconsin</option>
+        <option value="wyoming">Wyoming</option>
+      </select>
+      <button class="button" onclick="goToStep3()">Next</button>
+      <p class="note">Select your state to proceed.</p>
+    </div>
+
+    <!-- Step 3: Add Phone Number -->
+    <div id="step3">
+      <input type="tel" id="phoneInput" placeholder="Enter your phone (e.g., 5176438648)" class="input" required>
+      <button class="button" onclick="handleLogin()">Log In</button>
+      <p class="note">Enter your 10-digit phone number to complete setup.</p>
+    </div>
+  </div>
+
+  <script>
+    let userName = '';
+    let state = '';
+    let area = '';
+    let phone = '';
+
+    function goToStep2() {
+      userName = document.getElementById('nameInput').value.trim();
+      if (!userName || !userName.startsWith('@')) {
+        alert('Please enter a valid identity starting with @ (e.g., @markus).');
+        return;
+      }
+      userName = userName.slice(1); // Remove @
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'block';
+    }
+
+    function goToStep3() {
+      state = document.getElementById('stateSelect').value;
+      if (!state) {
+        alert('Please select a state.');
+        return;
+      }
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('step3').style.display = 'block';
+    }
+
+    async function handleLogin() {
+      phone = document.getElementById('phoneInput').value.trim();
+      if (!phone || !/^\d{10}$/.test(phone)) {
+        alert('Please enter a valid 10-digit phone number.');
+        return;
+      }
+
+      // Extract area code (first 3 digits) and user name (last 7 digits)
+      area = phone.slice(0, 3); // e.g., 517
+      const phoneName = phone.slice(3); // e.g., 6438648
+
+      // Form identities
+      const identity1 = `${userName}.grownfolk`; // e.g., Markus.grownfolk
+      const identity2 = `${userName}.${state}`;  // e.g., Markus.michigan
+      const identity3 = `${phoneName}.${area}`;  // e.g., 6438648.517
+
+      try {
+        const response = await fetch('https://mail-backend-6gti.onrender.com/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: identity1, secondaryEmail: identity2, phone })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.wallet) {
+            alert(`Logged in as ${identity1}, ${identity2}, and ${identity3}! Wallet: ${data.wallet}. Redirecting...`);
+            // Replace with navigation to mail UI or dashboard
+            window.location.href = 'https://your-mail-ui.com'; // Update with actual UI URL
+          } else {
+            alert('Login failed: No wallet returned.');
+          }
+        } else {
+          alert(`Error: ${response.statusText}`);
+        }
+      } catch (error) {
+        alert('Network error. Please try again.');
+        console.error('Login error:', error);
+      }
+    }
+
+    // Allow Enter key to trigger actions
+    document.getElementById('nameInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') goToStep2();
+    });
+    document.getElementById('phoneInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') handleLogin();
+    });
+  </script>
+</body>
+</html>
