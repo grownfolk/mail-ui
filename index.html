@@ -14,9 +14,10 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start; /* Changed from center to flex-start */
       align-items: center;
-      padding: 0 20px;
+      padding: 40px 20px 20px; /* Added top padding to control space at the top */
+      box-sizing: border-box;
     }
 
     .content {
@@ -25,14 +26,14 @@
     }
 
     .logo {
-      width: 130px;
-      margin-bottom: 25px;
+      width: 200px; /* Increased logo size for better prominence */
+      margin-bottom: 15px; /* Reduced margin to tighten spacing */
     }
 
     .tagline {
       font-size: 20px;
       font-weight: 600;
-      margin-bottom: 10px;
+      margin-bottom: 20px; /* Slightly increased for better separation from input */
     }
 
     .emoji {
@@ -73,6 +74,25 @@
 
     #step2, #step3 {
       display: none;
+    }
+
+    /* Media query for mobile screens */
+    @media (max-width: 600px) {
+      body {
+        padding-top: 30px; /* Slightly less padding on smaller screens */
+      }
+
+      .logo {
+        width: 180px; /* Slightly smaller logo for smaller screens, but still prominent */
+      }
+
+      .tagline {
+        font-size: 18px; /* Slightly smaller tagline for better fit */
+      }
+
+      .input, .select, .button {
+        width: 100%; /* Full width on mobile for better usability */
+      }
     }
   </style>
 </head>
